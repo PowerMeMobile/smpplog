@@ -36,6 +36,8 @@ process_smpp_log(Fd) ->
 write_csv_log(CsvLog, Pdus) ->
 	case file:open(CsvLog, [write]) of
 		{ok, Fd} ->
+			BomUtf8 = unicode:encoding_to_bom(utf8),
+			file:write(Fd, BomUtf8),
 			[write_pdu(Fd, Pdu) || Pdu <- Pdus],
 			file:close(Fd);
 		{error, Reason} ->
@@ -51,8 +53,9 @@ write_pdu(Fd, Pdu) ->
 	DstAddr = proplists:get_value(destination_addr, Params),
 	Encoding = proplists:get_value(data_coding, Params),
 	Body = proplists:get_value(short_message, Params),
+	{ok, Utf8} = iconverl:conv("utf-8//IGNORE", "ucs-2be", list_to_binary(Body)),
 	io:fwrite(Fd, "datetime=~s;command_id=~p;seq_num=~p;src_addr=~p;dst_addr=~p;encoding=~p;body=~s~n",
-		[Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, Body]).
+		[Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, Utf8]).
 
 find_hex_dump(Fd, Pdus) ->
 	case file:read_line(Fd) of
