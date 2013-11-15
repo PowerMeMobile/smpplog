@@ -54,8 +54,25 @@ write_pdu(Fd, Pdu) ->
 	Encoding = proplists:get_value(data_coding, Params),
 	Body = proplists:get_value(short_message, Params),
 	{ok, Utf8} = iconverl:conv("utf-8//IGNORE", "ucs-2be", list_to_binary(Body)),
+	Utf8Escaped = list_to_binary(escape(binary_to_list(Utf8))),
 	io:fwrite(Fd, "datetime=~s;command_id=~p;seq_num=~p;src_addr=~p;dst_addr=~p;encoding=~p;body=~s~n",
-		[Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, Utf8]).
+		[Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, Utf8Escaped]).
+
+escape(Utf8) ->
+	escape(Utf8, []).
+
+escape([], Acc) ->
+	lists:reverse(Acc);
+escape([Char | Chars], Acc0) ->
+	Acc1 =
+		case Char of
+			%% Escape sequences
+			%% http://www.erlang.org/doc/reference_manual/data_types.html#id74018
+			$\n -> [$n, $\\ | Acc0];
+			$\a -> [$a, $\\ | Acc0];
+			_   -> [Char | Acc0]
+		end,
+	escape(Chars, Acc1).
 
 find_hex_dump(Fd, Pdus) ->
 	case file:read_line(Fd) of
