@@ -5,19 +5,19 @@ In order to compile and run the **smpplog** utility you need to have [Erlang](ht
 ## Compilation
 
 <pre>
-git clone https://github.com/PowerMeMobile/smpplog.git
-cd smppload
-make
+$ git clone https://github.com/PowerMeMobile/smpplog.git
+$ cd smppload
+$ make
 </pre>
 
 ## Usage
 
 <pre>
-cd rel/smpplog/
-./smpplog
+$ cd rel/smpplog/
+$ ./smpplog
 smpplog &lt;smpplog-file&gt; &lt;csv-file&gt;
 
-cat ../../test/smpp3.log
+$ cat ../../test/smpp3.log
 2013-11-15 00:35:20.002 > [info] SUBMIT_SM 2745613
 2013-11-15 00:35:20.002 > [info] hex dump (176 bytes):
 2013-11-15 00:35:20.002 > [info] 000000B0:00000004:00000000:0029E50D
@@ -35,8 +35,8 @@ cat ../../test/smpp3.log
 2013-11-15 00:35:20.002 > [info] command_length=176,command_id=4,command_status=0,
 2013-11-15 00:35:20.002 > [info] sequence_number=2745613,
 
-./smpplog ../../test/smpp3.log csv.log
+$ ./smpplog ../../test/smpp3.log csv.log
 
-cat csv.log
+$ cat csv.log
 datetime=2013-11-15 00:35:20.002;command_id=submit_sm;seq_num=2745613;src_addr="ATHEER";dst_addr="96599767793";encoding=8;body=تذكير\n\nالليلة\n\nأفراح المنير\n\nصالة مشبب الجلال\n\n55444561
 </pre>
