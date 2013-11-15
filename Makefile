@@ -5,15 +5,11 @@ PRJ_PLT=$(NAME).plt
 
 .PHONY: test
 
-#all: generate escriptize
-all: escriptize
+all: generate
 
 generate: compile xref
 	@rm -rf ./rel/$(NAME)
 	@$(REBAR) generate
-
-escriptize: compile xref
-	@$(REBAR) escriptize
 
 compile: get-deps
 	@$(REBAR) compile

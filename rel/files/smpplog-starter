@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+	echo "smpplog <smpplog-file> <csv-file>"
+	exit 1
+fi
+
+./bin/smpplog script "$1" "$2"
