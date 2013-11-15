@@ -7,12 +7,15 @@ In order to compile and run the **smpplog** utility you need to have [Erlang](ht
 <pre>
 git clone https://github.com/PowerMeMobile/smpplog.git
 cd smppload
-make escriptize
+make
 </pre>
 
 ## Usage
 
 <pre>
+cd rel/smpplog/
 ./smpplog
 smpplog &lt;smpplog-file&gt; &lt;csv-file&gt;
+
+./smpplog ../../test/smpp3.log csv.log
 </pre>
