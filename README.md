@@ -12,6 +12,7 @@ make escriptize
 
 ## Usage
 
+<pre>
 ./smpplog
-smpplog <smpplog-file> <csv-file>
-
+smpplog &lt;smpplog-file&gt; &lt;csv-file&gt;
+</pre>
