@@ -5,8 +5,7 @@
     {applications, [
         kernel,
         stdlib,
-        oserl,
-        iconverl
+        oserl
     ]},
     {mod, {smpplog_app, []}},
     {env, []}

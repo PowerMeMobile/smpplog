@@ -53,7 +53,7 @@ write_pdu(Fd, Pdu) ->
     DstAddr = proplists:get_value(destination_addr, Params),
     Encoding = proplists:get_value(data_coding, Params),
     Body = proplists:get_value(short_message, Params),
-    {ok, Utf8} = iconverl:conv("utf-8//IGNORE", "ucs-2be", list_to_binary(Body)),
+    Utf8 = unicode:characters_to_binary(list_to_binary(Body), {utf16, big}, utf8),
     Utf8Escaped = list_to_binary(escape(binary_to_list(Utf8))),
     io:fwrite(Fd, "datetime=~s;command_id=~p;seq_num=~p;src_addr=~s;dst_addr=~s;encoding=~p;body=~s~n",
         [Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, Utf8Escaped]).
