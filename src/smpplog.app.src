@@ -1,13 +1,13 @@
 {application, smpplog, [
-	{description, "SMPP Log Parser from Power Alley Gateway Suite"},
-	{vsn, "0.0.1"},
-	{registered, []},
-	{applications, [
-		kernel,
-		stdlib,
-		oserl,
-		iconverl
-	]},
-	{mod, {smpplog_app, []}},
-	{env, []}
+    {description, "SMPP Log Parser from Power Alley Gateway Suite"},
+    {vsn, "0.0.1"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        oserl,
+        iconverl
+    ]},
+    {mod, {smpplog_app, []}},
+    {env, []}
 ]}.
