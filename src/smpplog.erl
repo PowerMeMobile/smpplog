@@ -74,7 +74,7 @@ escape([Char | Chars], Acc0) ->
             %% Escape sequences
             %% http://www.erlang.org/doc/reference_manual/data_types.html#id74018
             $\n -> [$n, $\\ | Acc0];
-            $\a -> [$a, $\\ | Acc0];
+            $\r -> [$r, $\\ | Acc0];
             _   -> [Char | Acc0]
         end,
     escape(Chars, Acc1).
