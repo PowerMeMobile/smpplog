@@ -48,10 +48,14 @@ write_csv_log(CsvLog, Pdus) ->
 write_pdu(Fd, Pdu) ->
     Datetime = Pdu#pdu.datetime,
     {CmdId, _, SeqNum, Params} = Pdu#pdu.message,
+
+    io:format("Pdu:~n~p~n~n", [Pdu#pdu.message]),
+
     CmdName = ?COMMAND_NAME(CmdId),
     SrcAddr = proplists:get_value(source_addr, Params),
     DstAddr = proplists:get_value(destination_addr, Params),
     Encoding = proplists:get_value(data_coding, Params),
+    EsmClass = proplists:get_value(esm_class, Params),
     Body = proplists:get_value(short_message, Params),
     FromEnc =
         case Encoding of
@@ -60,8 +64,8 @@ write_pdu(Fd, Pdu) ->
         end,
     Utf8 = unicode:characters_to_binary(list_to_binary(Body), FromEnc, utf8),
     Utf8Escaped = list_to_binary(escape(binary_to_list(Utf8))),
-    io:fwrite(Fd, "datetime=~s;command_id=~p;seq_num=~p;src_addr=~s;dst_addr=~s;encoding=~p;body=~s~n",
-        [Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, Utf8Escaped]).
+    io:fwrite(Fd, "datetime=~s;command_id=~p;seq_num=~p;src_addr=~s;dst_addr=~s;encoding=~p;esm_class=~p;body=~s~n",
+        [Datetime, CmdName, SeqNum, SrcAddr, DstAddr, Encoding, EsmClass, Utf8Escaped]).
 
 escape(Utf8) ->
     escape(Utf8, []).
